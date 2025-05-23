@@ -13,6 +13,7 @@ const SeatAllotment = () => {
   const [allotment, setAllotment] = useState<SeatAllotmentData | null>(null);
   const [error, setError] = useState<string>("");
   const [updating, setUpdating] = useState<boolean>(false);
+  const [status, setStatus] = useState<"LOCK" | "FLOAT" | "PENDING">("FLOAT");
 
   useEffect(() => {
     const fetchAllotment = async () => {
@@ -23,13 +24,16 @@ const SeatAllotment = () => {
       }
 
       try {
-        const res = await fetch(`${import.meta.env.VITE_BACKEND_URL}/api/seat-allotment`, {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${token}`,
-          },
-        });
+        const res = await fetch(
+          `${import.meta.env.VITE_BACKEND_URL}/api/seat-allotment`,
+          {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+              Authorization: `Bearer ${token}`,
+            },
+          }
+        );
 
         if (!res.ok) {
           const err = await res.json();
@@ -55,7 +59,7 @@ const SeatAllotment = () => {
     try {
       const token = localStorage.getItem("token");
       const res = await fetch(
-        `{BACKEND_URL}/api/seat-allotment`,
+        `${import.meta.env.VITE_BACKEND_URL}/api/seat-allotment/status`,
         {
           method: "POST",
           headers: {
@@ -111,13 +115,22 @@ const SeatAllotment = () => {
           <strong>Status:</strong>{" "}
           <select
             value={allotment.status}
-            disabled={updating}
-            onChange={(e) => handleStatusChange(e.target.value as any)}
+            disabled={updating || allotment.status === "LOCK"}
+            onChange={(e) =>
+              setStatus(e.target.value as "LOCK" | "FLOAT" | "PENDING")
+            }
           >
             <option value="LOCK">LOCK</option>
             <option value="FLOAT">FLOAT</option>
             <option value="PENDING">PENDING</option>
           </select>
+          <button
+            className="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700 transition disabled:bg-gray-400"
+            disabled={status === "PENDING" || updating}
+            onClick={() => handleStatusChange(status as "LOCK" | "FLOAT")}
+          >
+            Update
+          </button>
         </label>
         {updating && <span style={{ marginLeft: 8 }}>Updating…</span>}
       </div>
