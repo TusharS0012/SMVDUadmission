@@ -89,77 +89,113 @@ const SeatAllotment = () => {
 
   return (
     <>
-      <header className="bg-blue-950 text-white px-6 py-4 shadow">
+      {/* Header */}
+      <header className="bg-blue-950 text-white px-6 py-4 shadow-sm">
         <div className="max-w-6xl mx-auto flex items-center justify-between">
           <div className="flex items-center gap-4">
             <img src="/cropped-logo-600-1.webp" alt="logo" className="h-10" />
-            <h1 className="text-xl font-bold leading-tight">
-              Shri Mata Vaishno Devi University
-              <br />
-              Admission Portal
-            </h1>
+            <div>
+              <h1 className="text-xl font-bold">
+                Shri Mata Vaishno Devi University
+              </h1>
+              <p className="text-sm">Admission Portal</p>
+            </div>
           </div>
-          <nav>
-            <ul className="flex gap-6 text-sm">
-              <a href="/login">Logout</a>
-              <a href="/SeatAllotment">Seat Allotment</a>
-              <a href="/profile">Profile</a>
-            </ul>
+          <nav className="text-sm space-x-6">
+            <a href="/login" className="hover:underline">
+              Logout
+            </a>
+            <a href="/allotment" className="hover:underline">
+              Seat Allotment
+            </a>
+            <a href="/profile" className="hover:underline">
+              Profile
+            </a>
           </nav>
         </div>
       </header>
 
-      <div className="max-w-6xl mx-auto mt-10 p-6 bg-orange-300 shadow rounded-lg min-h-screen">
-        <h2 className="text-2xl font-semibold mb-6">Seat Allotment</h2>
+      {/* Main Content */}
+      <main className="max-w-4xl mx-auto mt-12 px-4 sm:px-6 lg:px-8">
+        <div className="bg-white shadow rounded-lg p-8">
+          <h2 className="text-2xl font-semibold text-gray-800 mb-6">
+            Seat Allotment
+          </h2>
 
-        {error && <p className="text-red-600 mb-4">{error}</p>}
-        {!allotment ? (
-          <p>Loading seat allotment...</p>
-        ) : (
-          <div className="space-y-4">
-            <p>
-              <strong>Candidate Name:</strong> {allotment.candidateName}
-            </p>
-            <p>
-              <strong>Preference Number:</strong> {allotment.preference}
-            </p>
-            <p>
-              <strong>Course:</strong> {allotment.course}
-            </p>
-            <p>
-              <strong>Round:</strong> {allotment.round}
-            </p>
-            <div>
-              <label className="block font-semibold mb-1">Status</label>
-              <select
-                className="px-4 py-2 border bg-white rounded w-full max-w-xs"
-                value={status}
-                onChange={(e) =>
-                  setStatus(e.target.value as "LOCK" | "FLOAT" | "PENDING")
-                }
-                disabled={updating || allotment.status === "LOCK"}
-              >
-                <option value="LOCK">LOCK</option>
-                <option value="FLOAT">FLOAT</option>
-                <option value="PENDING">PENDING</option>
-              </select>
-                {status == "LOCK" && (
-                  <span className="text-red-600 mt-2">
-                    You cannot change the status once it is LOCKED.
-                  </span>
-                )}
+          {error && (
+            <div className="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded mb-4">
+              <strong className="font-medium">Error:</strong> {error}
             </div>
+          )}
 
-            <button
-              className="bg-blue-600 text-white px-6 py-2 rounded hover:bg-blue-700 transition disabled:bg-gray-400"
-              disabled={status === "PENDING" || updating}
-              onClick={() => handleStatusChange(status as "LOCK" | "FLOAT")}
-            >
-              {updating ? "Updating..." : "Update Status"}
-            </button>
-          </div>
-        )}
-      </div>
+          {!allotment ? (
+            <p className="text-gray-600">Loading seat allotment...</p>
+          ) : (
+            <div className="space-y-5">
+              <div className="grid sm:grid-cols-2 gap-4">
+                <p>
+                  <strong>Candidate Name:</strong> {allotment.candidateName}
+                </p>
+                <p>
+                  <strong>Preference Number:</strong> {allotment.preference}
+                </p>
+                <p>
+                  <strong>Course:</strong> {allotment.course}
+                </p>
+                <p>
+                  <strong>Round:</strong> {allotment.round}
+                </p>
+              </div>
+
+              <div>
+                <label className="block font-semibold mb-2">Status</label>
+                <select
+                  className="block w-full max-w-xs px-4 py-2 border border-gray-300 rounded focus:ring-2 focus:ring-blue-500"
+                  value={status}
+                  onChange={(e) =>
+                    setStatus(e.target.value as "LOCK" | "FLOAT" | "PENDING")
+                  }
+                  disabled={updating || allotment.status === "LOCK"}
+                >
+                  <option value="LOCK">LOCK</option>
+                  <option value="FLOAT">FLOAT</option>
+                  <option value="PENDING">PENDING</option>
+                </select>
+
+                {status === "LOCK" && (
+                  <div className="flex items-start gap-3 mt-4 p-4 border-l-4 border-red-600 bg-red-50 rounded shadow-sm">
+                    <svg
+                      className="w-5 h-5 text-red-600 mt-1"
+                      fill="none"
+                      stroke="currentColor"
+                      strokeWidth={2}
+                      viewBox="0 0 24 24"
+                    >
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        d="M12 15v2m0-6a2 2 0 00-2 2v4h4v-4a2 2 0 00-2-2zm6 4V9a6 6 0 00-12 0v6"
+                      />
+                    </svg>
+                    <p className="text-sm text-red-700">
+                      <strong>Status is LOCKED.</strong> You cannot change it
+                      any further.
+                    </p>
+                  </div>
+                )}
+              </div>
+
+              <button
+                className="mt-4 inline-flex items-center bg-blue-600 text-white px-5 py-2 rounded-md hover:bg-blue-700 transition disabled:bg-gray-400 disabled:cursor-not-allowed"
+                disabled={status === "PENDING" || updating}
+                onClick={() => handleStatusChange(status as "LOCK" | "FLOAT")}
+              >
+                {updating ? "Updating..." : "Update Status"}
+              </button>
+            </div>
+          )}
+        </div>
+      </main>
     </>
   );
 };

@@ -10,11 +10,14 @@ const Login: React.FC = () => {
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
 
-    const response = await fetch("http://localhost:3000/api/login", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ email, applicationNumber }),
-    });
+    const response = await fetch(
+      `${import.meta.env.VITE_BACKEND_URL}/api/login`,
+      {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ email, applicationNumber }),
+      }
+    );
 
     const data = await response.json();
 

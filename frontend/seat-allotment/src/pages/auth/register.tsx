@@ -12,11 +12,14 @@ const Register: React.FC = () => {
   const handleRegister = async (e: React.FormEvent) => {
     e.preventDefault();
 
-    const response = await fetch("http://localhost:3000/api/register", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ name, email, phoneNumber }),
-    });
+    const response = await fetch(
+      `${import.meta.env.VITE_BACKEND_URL}/api/register`,
+      {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ name, email, phoneNumber }),
+      }
+    );
 
     const data = await response.json();
 
@@ -103,7 +106,7 @@ const Register: React.FC = () => {
             <p className="text-sm text-center text-gray-600 mt-4">
               Already registered?{" "}
               <Link
-                to="/login"
+                to="/"
                 className="text-blue-600 hover:underline font-medium"
               >
                 Register

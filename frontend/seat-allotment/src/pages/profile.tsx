@@ -66,6 +66,7 @@ const Profile: React.FC = () => {
 
   return (
     <>
+      {/* Header */}
       <header className="bg-blue-950 text-white px-6 py-4 shadow">
         <div className="max-w-6xl mx-auto flex items-center justify-between">
           <div className="flex items-center gap-4">
@@ -77,127 +78,132 @@ const Profile: React.FC = () => {
             </h1>
           </div>
           <nav>
-            <ul className="flex gap-6 text-sm">
-              <a href="/login">Logout</a>
-              <a href="/allotment">Seat Allotment</a>
-              <a href="/profile">Profile</a>
+            <ul className="flex gap-6 text-sm font-medium">
+              <a href="/" className="hover:underline">
+                Logout
+              </a>
+              <a href="/allotment" className="hover:underline">
+                Seat Allotment
+              </a>
+              <a href="/profile" className="hover:underline">
+                Profile
+              </a>
             </ul>
           </nav>
         </div>
       </header>
-      <div className="max-w-6xl mx-auto mt-10 p-6 bg-orange-300 shadow rounded-lg min-h-screen">
-        <h2 className="text-2xl font-semibold mb-6">Edit Profile</h2>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-          <Input
-            label="Application Number"
-            name="applicationNumber"
-            value={applicationNumber}
-            disabled
-          />
-          <Input
-            label="Full Name"
-            name="studentName"
-            value={profile.studentName}
-            onChange={handleChange}
-          />
-          <Input
-            label="Father/Mother Name"
-            name="fatherMotherName"
-            value={profile.fatherMotherName}
-            onChange={handleChange}
-          />
-          <Input
-            label="Phone Number"
-            name="phoneNumber"
-            value={profile.phoneNumber}
-            onChange={handleChange}
-          />
-          <Input label="Email" name="email" value={profile.email} />
-          <Input
-            label="JEE CRL Rank"
-            name="jeeCRL"
-            value={profile.jeeCRL}
-            onChange={handleChange}
-            type="number"
-          />
-          <Select
-            label="Category"
-            name="category"
-            value={profile.category}
-            onChange={handleChange}
-            options={["GEN", "SC", "ST", "OBC", "EWS"]}
-          />
-          <Input
-            label="Category Rank"
-            name="categoryRank"
-            value={profile.categoryRank || ""}
-            onChange={handleChange}
-            type="number"
-          />
-          <Input
-            label="Course Choice 1"
-            name="courseChoice1"
-            value={profile.courseChoice1}
-            onChange={handleChange}
-          />
-          <Input
-            label="Course Choice 2"
-            name="courseChoice2"
-            value={profile.courseChoice2 || ""}
-            onChange={handleChange}
-          />
-          <Input
-            label="Course Choice 3"
-            name="courseChoice3"
-            value={profile.courseChoice3 || ""}
-            onChange={handleChange}
-          />
-          <Input
-            label="Course Choice 4"
-            name="courseChoice4"
-            value={profile.courseChoice4 || ""}
-            onChange={handleChange}
-          />
-          <Input
-            label="Course Choice 5"
-            name="courseChoice5"
-            value={profile.courseChoice5 || ""}
-            onChange={handleChange}
-          />
-          <Input
-            label="Course Choice 6"
-            name="courseChoice6"
-            value={profile.courseChoice6 || ""}
-            onChange={handleChange}
-          />
-          <Input
-            label="Course Choice 7"
-            name="courseChoice7"
-            value={profile.courseChoice7 || ""}
-            onChange={handleChange}
-          />
-          <Input
-            label="Sports Marks (if applicable)"
-            name="sportsMarks"
-            value={profile.sportsMarks || ""}
-            onChange={handleChange}
-            type="number"
-          />
-        </div>
+      {/* Main Content */}
+      <main className="max-w-6xl mx-auto mt-10 p-8 bg-white shadow-xl rounded-2xl min-h-screen">
+        <h2 className="text-3xl font-bold text-gray-800 mb-8 border-b pb-2">
+          Edit Profile
+        </h2>
 
-        {error && <p className="text-red-500 mt-4">{error}</p>}
-        {success && <p className="text-green-600 mt-4">{success}</p>}
+        {/* Personal Info */}
+        <section className="mb-10">
+          <h3 className="text-xl font-semibold text-gray-700 mb-4">
+            Personal Information
+          </h3>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <Input
+              label="Application Number"
+              name="applicationNumber"
+              value={applicationNumber}
+              disabled
+            />
+            <Input
+              label="Full Name"
+              name="studentName"
+              value={profile.studentName}
+              onChange={handleChange}
+            />
+            <Input
+              label="Father/Mother Name"
+              name="fatherMotherName"
+              value={profile.fatherMotherName}
+              onChange={handleChange}
+            />
+            <Input
+              label="Phone Number"
+              name="phoneNumber"
+              value={profile.phoneNumber}
+              onChange={handleChange}
+            />
+            <Input label="Email" name="email" value={profile.email} />
+          </div>
+        </section>
 
-        <div className="mt-6 text-right">
+        {/* Academic Info */}
+        <section className="mb-10">
+          <h3 className="text-xl font-semibold text-gray-700 mb-4">
+            Academic Details
+          </h3>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <Input
+              label="JEE CRL Rank"
+              name="jeeCRL"
+              value={profile.jeeCRL}
+              onChange={handleChange}
+              type="number"
+            />
+            <Select
+              label="Category"
+              name="category"
+              value={profile.category}
+              onChange={handleChange}
+              options={["GEN", "SC", "ST", "OBC", "EWS"]}
+            />
+            <Input
+              label="Category Rank"
+              name="categoryRank"
+              value={profile.categoryRank || ""}
+              onChange={handleChange}
+              type="number"
+            />
+            <Input
+              label="Sports Marks (if applicable)"
+              name="sportsMarks"
+              value={profile.sportsMarks || ""}
+              onChange={handleChange}
+              type="number"
+            />
+          </div>
+        </section>
+
+        {/* Preferences */}
+        <section className="mb-10">
+          <h3 className="text-xl font-semibold text-gray-700 mb-4">
+            Course Preferences
+          </h3>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            {[...Array(7)].map((_, i) => (
+              <Input
+                key={i}
+                label={`Course Choice ${i + 1}`}
+                name={`courseChoice${i + 1}`}
+                value={profile[`courseChoice${i + 1}`] || ""}
+                onChange={handleChange}
+              />
+            ))}
+          </div>
+        </section>
+
+        {/* Alerts */}
+        {error && <p className="text-red-600 font-medium mb-4">{error}</p>}
+        {success && (
+          <p className="text-green-600 font-medium mb-4">{success}</p>
+        )}
+
+        {/* Save Button */}
+        <div className="text-right">
           <button
             onClick={handleSave}
-            className="bg-blue-600 text-white px-6 py-2 rounded hover:bg-blue-700 transition"
+            className="bg-blue-600 hover:bg-blue-700 text-white font-medium px-8 py-2 rounded-lg transition"
           >
             Save Changes
           </button>
         </div>
-      </div>
+      </main>
     </>
   );
 };
