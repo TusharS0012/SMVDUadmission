@@ -110,8 +110,27 @@ const verifyToken = (req, res, next) => {
 // -------------------------
 // Student Endpoints
 // -------------------------
-// PUT /api/profile/:applicationNumber
+// Get /api/profile/:applicationNumber
 app.get("/api/profile/:applicationNumber", async (req, res) => {
+  const { applicationNumber } = req.params;
+
+  try {
+    const student = await prisma.studentApplication.findUnique({
+      where: { applicationNumber },
+    });
+
+    if (!student) {
+      return res.status(404).json({ message: "Student not found." });
+    }
+
+    res.json(student);
+  } catch (err) {
+    console.error("Error fetching profile:", err);
+    res.status(500).json({ message: "Internal server error." });
+  }
+});
+// Update /api/profile/:applicationNumber
+app.post("/api/profile/:applicationNumber", async (req, res) => {
   const { applicationNumber } = req.params;
   const data = req.body;
 

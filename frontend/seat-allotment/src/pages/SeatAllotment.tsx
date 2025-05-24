@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from "react";
-import { Select } from "../components/select";
 
 interface SeatAllotmentData {
   candidateName: string;
@@ -102,8 +101,8 @@ const SeatAllotment = () => {
           </div>
           <nav>
             <ul className="flex gap-6 text-sm">
-              <a href="/login">Login</a>
-              <a href="/allotment">Seat Allotment</a>
+              <a href="/login">Logout</a>
+              <a href="/SeatAllotment">Seat Allotment</a>
               <a href="/profile">Profile</a>
             </ul>
           </nav>
@@ -133,7 +132,7 @@ const SeatAllotment = () => {
             <div>
               <label className="block font-semibold mb-1">Status</label>
               <select
-                className="px-4 py-2 border rounded w-full max-w-xs"
+                className="px-4 py-2 border bg-white rounded w-full max-w-xs"
                 value={status}
                 onChange={(e) =>
                   setStatus(e.target.value as "LOCK" | "FLOAT" | "PENDING")
@@ -144,6 +143,11 @@ const SeatAllotment = () => {
                 <option value="FLOAT">FLOAT</option>
                 <option value="PENDING">PENDING</option>
               </select>
+                {status == "LOCK" && (
+                  <span className="text-red-600 mt-2">
+                    You cannot change the status once it is LOCKED.
+                  </span>
+                )}
             </div>
 
             <button

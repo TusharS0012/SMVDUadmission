@@ -79,7 +79,7 @@ const Profile: React.FC = () => {
           <nav>
             <ul className="flex gap-6 text-sm">
               <a href="/login">Logout</a>
-              <a href="/SeatAllotment">Seat Allotment</a>
+              <a href="/allotment">Seat Allotment</a>
               <a href="/profile">Profile</a>
             </ul>
           </nav>
