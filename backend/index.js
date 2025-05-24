@@ -130,7 +130,7 @@ app.get("/api/profile/:applicationNumber", async (req, res) => {
   }
 });
 // Update /api/profile/:applicationNumber
-app.post("/api/profile/:applicationNumber", async (req, res) => {
+app.put("/api/profile/:applicationNumber", async (req, res) => {
   const { applicationNumber } = req.params;
   const data = req.body;
 

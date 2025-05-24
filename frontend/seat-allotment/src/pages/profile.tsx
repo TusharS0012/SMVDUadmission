@@ -43,7 +43,7 @@ const Profile: React.FC = () => {
 
     try {
       const res = await fetch(
-        `${import.meta.env.VITE_BACKEND_URL}//api/profile/${applicationNumber}`,
+        `${import.meta.env.VITE_BACKEND_URL}/api/profile/${applicationNumber}`,
         {
           method: "PUT",
           headers: {
