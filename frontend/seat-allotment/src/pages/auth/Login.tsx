@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { useNavigate, Link } from "react-router-dom"; // ✅ Added Link
+import { useNavigate, Link } from "react-router-dom";
 
 const Login: React.FC = () => {
   const [email, setEmail] = useState("");
@@ -24,8 +24,6 @@ const Login: React.FC = () => {
     if (response.ok) {
       localStorage.setItem("token", data.token);
       localStorage.setItem("applicationNumber", data.applicationNumber);
-      console.log(data.applicationNumber);
-      console.log(localStorage.getItem("applicationNumber"));
       navigate("/profile");
     } else {
       setError(data.message || "Login failed");
@@ -33,8 +31,8 @@ const Login: React.FC = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gray-50">
-      <header className="bg-blue-950 text-white px-6 py-4 shadow">
+    <div className="min-h-screen bg-gradient-to-b from-blue-950 to-white">
+      <header className="bg-transparent text-white px-6 py-4 shadow-none">
         <div className="max-w-6xl mx-auto flex items-center justify-between">
           <div className="flex items-center gap-4">
             <img src="/cropped-logo-600-1.webp" alt="logo" className="h-10" />
@@ -55,8 +53,12 @@ const Login: React.FC = () => {
       </header>
 
       {/* Main Login Card */}
-      <main className="flex justify-center items-center mt-20 px-4">
-        <div className="w-full max-w-md bg-white rounded-lg shadow-md p-8">
+      <main className="flex justify-center items-center mt-16 px-4 pb-20">
+        <div
+          className="w-full max-w-md bg-white rounded-lg shadow-lg p-8
+                        // Add subtle shadow with a bit of opacity to soften edge
+                        shadow-gray-400/40"
+        >
           <h2 className="text-2xl font-semibold text-center mb-6 text-gray-800">
             Student Login
           </h2>
@@ -88,12 +90,11 @@ const Login: React.FC = () => {
             {error && <p className="text-red-500 text-sm">{error}</p>}
             <button
               type="submit"
-              className="w-full bg-blue-600 text-white py-2 rounded hover:bg-blue-700 transition duration-200"
+              className="w-full bg-green-600 text-white py-2 rounded hover:bg-blue-700 transition duration-200"
             >
               Login
             </button>
 
-            {/* ✅ Link to Register */}
             <p className="text-sm text-center text-gray-600 mt-4">
               Haven't registered yet?{" "}
               <Link

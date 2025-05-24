@@ -35,7 +35,7 @@ export const AdminLogin: React.FC = () => {
   return (
     <>
       {/* Header (Matches Profile Page) */}
-      <header className="bg-blue-950 text-white px-6 py-4 shadow">
+      <header className="bg-blue-950 text-white px-6 py-4">
         <div className="max-w-6xl mx-auto flex items-center justify-between">
           <div className="flex items-center gap-4">
             <img src="/cropped-logo-600-1.webp" alt="logo" className="h-10" />
@@ -59,7 +59,7 @@ export const AdminLogin: React.FC = () => {
       </header>
 
       {/* Login Form Card */}
-      <main className="flex items-center justify-center min-h-[calc(100vh-80px)] bg-gray-100 px-4">
+      <main className="flex items-center bg-gradient-to-b from-blue-950 to-white justify-center min-h-[calc(100vh-80px)] bg-gray-100 px-4">
         <div className="w-full max-w-md bg-white shadow-2xl rounded-2xl p-8">
           <h2 className="text-3xl font-bold text-center text-gray-800 mb-6">
             Admin Login
