@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import { Select } from "../components/select";
 
 interface SeatAllotmentData {
   candidateName: string;
@@ -42,7 +43,7 @@ const SeatAllotment = () => {
 
         const data: SeatAllotmentData = await res.json();
         setAllotment(data);
-        console.log(data);
+        setStatus(data.status);
       } catch (err: any) {
         setError(err.message || "Failed to fetch seat allotment.");
       }
@@ -78,8 +79,8 @@ const SeatAllotment = () => {
         throw new Error(err.message || res.statusText);
       }
 
-      // Optimistically update UI
       setAllotment((prev) => prev && { ...prev, status: newStatus });
+      setStatus(newStatus);
     } catch (err: any) {
       setError(err.message || "Failed to update status.");
     } finally {
@@ -87,54 +88,75 @@ const SeatAllotment = () => {
     }
   };
 
-  if (error) {
-    return <p style={{ color: "red" }}>{error}</p>;
-  }
-  if (!allotment) {
-    return <p>Loading seat allotment...</p>;
-  }
-
   return (
-    <div>
-      <h2>Seat Allotment</h2>
-      <p>
-        <strong>Candidate:</strong> {allotment.candidateName}
-      </p>
-      <p>
-        <strong>Preference Number:</strong> {allotment.preference}
-      </p>
-      <p>
-        <strong>Course:</strong> {allotment.course}
-      </p>
-      <p>
-        <strong>Round:</strong> {allotment.round}
-      </p>
+    <>
+      <header className="bg-blue-950 text-white px-6 py-4 shadow">
+        <div className="max-w-6xl mx-auto flex items-center justify-between">
+          <div className="flex items-center gap-4">
+            <img src="/cropped-logo-600-1.webp" alt="logo" className="h-10" />
+            <h1 className="text-xl font-bold leading-tight">
+              Shri Mata Vaishno Devi University
+              <br />
+              Admission Portal
+            </h1>
+          </div>
+          <nav>
+            <ul className="flex gap-6 text-sm">
+              <a href="/login">Login</a>
+              <a href="/allotment">Seat Allotment</a>
+              <a href="/profile">Profile</a>
+            </ul>
+          </nav>
+        </div>
+      </header>
 
-      <div style={{ marginTop: "1rem" }}>
-        <label>
-          <strong>Status:</strong>{" "}
-          <select
-            value={allotment.status}
-            disabled={updating || allotment.status === "LOCK"}
-            onChange={(e) =>
-              setStatus(e.target.value as "LOCK" | "FLOAT" | "PENDING")
-            }
-          >
-            <option value="LOCK">LOCK</option>
-            <option value="FLOAT">FLOAT</option>
-            <option value="PENDING">PENDING</option>
-          </select>
-          <button
-            className="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700 transition disabled:bg-gray-400"
-            disabled={status === "PENDING" || updating}
-            onClick={() => handleStatusChange(status as "LOCK" | "FLOAT")}
-          >
-            Update
-          </button>
-        </label>
-        {updating && <span style={{ marginLeft: 8 }}>Updating…</span>}
+      <div className="max-w-6xl mx-auto mt-10 p-6 bg-orange-300 shadow rounded-lg min-h-screen">
+        <h2 className="text-2xl font-semibold mb-6">Seat Allotment</h2>
+
+        {error && <p className="text-red-600 mb-4">{error}</p>}
+        {!allotment ? (
+          <p>Loading seat allotment...</p>
+        ) : (
+          <div className="space-y-4">
+            <p>
+              <strong>Candidate Name:</strong> {allotment.candidateName}
+            </p>
+            <p>
+              <strong>Preference Number:</strong> {allotment.preference}
+            </p>
+            <p>
+              <strong>Course:</strong> {allotment.course}
+            </p>
+            <p>
+              <strong>Round:</strong> {allotment.round}
+            </p>
+            <div>
+              <label className="block font-semibold mb-1">Status</label>
+              <select
+                className="px-4 py-2 border rounded w-full max-w-xs"
+                value={status}
+                onChange={(e) =>
+                  setStatus(e.target.value as "LOCK" | "FLOAT" | "PENDING")
+                }
+                disabled={updating || allotment.status === "LOCK"}
+              >
+                <option value="LOCK">LOCK</option>
+                <option value="FLOAT">FLOAT</option>
+                <option value="PENDING">PENDING</option>
+              </select>
+            </div>
+
+            <button
+              className="bg-blue-600 text-white px-6 py-2 rounded hover:bg-blue-700 transition disabled:bg-gray-400"
+              disabled={status === "PENDING" || updating}
+              onClick={() => handleStatusChange(status as "LOCK" | "FLOAT")}
+            >
+              {updating ? "Updating..." : "Update Status"}
+            </button>
+          </div>
+        )}
       </div>
-    </div>
+    </>
   );
 };
 
