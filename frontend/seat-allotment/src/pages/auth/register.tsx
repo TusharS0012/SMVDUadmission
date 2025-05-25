@@ -9,10 +9,7 @@ const Register: React.FC = () => {
   const [error, setError] = useState("");
   const navigate = useNavigate();
 
-  const baseURL =
-    import.meta.env.MODE === "development"
-      ? import.meta.env.VITE_BACKEND_URL
-      : window?.configs?.apiUrl || "/";
+  const baseURL = import.meta.env.VITE_BACKEND_URL;
 
   const handleRegister = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -34,7 +31,6 @@ const Register: React.FC = () => {
 
   return (
     <div className="min-h-screen bg-gray-50">
-      {/* Header */}
       <header className="bg-blue-950 text-white px-6 py-4 shadow">
         <div className="max-w-6xl mx-auto flex items-center justify-between">
           <div className="flex items-center gap-4">
@@ -55,7 +51,6 @@ const Register: React.FC = () => {
         </div>
       </header>
 
-      {/* Registration Card */}
       <main className="flex justify-center items-center mt-20 px-4">
         <div className="w-full max-w-md bg-white rounded-lg shadow-md p-8">
           <h2 className="text-2xl font-semibold text-center mb-6 text-gray-800">

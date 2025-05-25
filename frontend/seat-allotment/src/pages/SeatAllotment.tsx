@@ -8,10 +8,7 @@ interface SeatAllotmentData {
   round: string;
   status: "LOCK" | "FLOAT" | "PENDING";
 }
-const baseURL =
-  import.meta.env.MODE === "development"
-    ? import.meta.env.VITE_BACKEND_URL
-    : window?.configs?.apiUrl || "/";
+const baseURL = import.meta.env.VITE_BACKEND_URL;
 
 const SeatAllotment = () => {
   const [allotment, setAllotment] = useState<SeatAllotmentData | null>(null);
@@ -87,7 +84,6 @@ const SeatAllotment = () => {
 
   return (
     <>
-      {/* Header */}
       <header className="bg-blue-950 text-white px-6 py-4 shadow-sm">
         <div className="max-w-6xl mx-auto flex items-center justify-between">
           <div className="flex items-center gap-4">
@@ -113,7 +109,6 @@ const SeatAllotment = () => {
         </div>
       </header>
 
-      {/* Main Content */}
       <main className="max-w-4xl mx-auto mt-12 px-4 sm:px-6 lg:px-8">
         <div className="bg-white shadow rounded-lg p-8">
           <h2 className="text-2xl font-semibold text-gray-800 mb-6">

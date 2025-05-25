@@ -1,10 +1,6 @@
 import { useEffect, useState } from "react";
 import { Input, Select } from "../components/select";
-
-const baseURL =
-  import.meta.env.MODE === "development"
-    ? import.meta.env.VITE_BACKEND_URL
-    : window?.configs?.apiUrl || "/";
+const baseURL = import.meta.env.VITE_BACKEND_URL;
 
 const Profile: React.FC = () => {
   const [profile, setProfile] = useState<any>("new");
@@ -89,14 +85,11 @@ const Profile: React.FC = () => {
           </nav>
         </div>
       </header>
-
-      {/* Main Content */}
       <main className="max-w-6xl mx-auto mt-10 p-8 bg-white shadow-xl rounded-2xl min-h-screen">
         <h2 className="text-3xl font-bold text-gray-800 mb-8 border-b pb-2">
           Edit Profile
         </h2>
 
-        {/* Personal Info */}
         <section className="mb-10">
           <h3 className="text-xl font-semibold text-gray-700 mb-4">
             Personal Information
@@ -130,7 +123,6 @@ const Profile: React.FC = () => {
           </div>
         </section>
 
-        {/* Academic Info */}
         <section className="mb-10">
           <h3 className="text-xl font-semibold text-gray-700 mb-4">
             Academic Details
@@ -167,7 +159,6 @@ const Profile: React.FC = () => {
           </div>
         </section>
 
-        {/* Preferences */}
         <section className="mb-10">
           <h3 className="text-xl font-semibold text-gray-700 mb-4">
             Course Preferences
@@ -185,13 +176,11 @@ const Profile: React.FC = () => {
           </div>
         </section>
 
-        {/* Alerts */}
         {error && <p className="text-red-600 font-medium mb-4">{error}</p>}
         {success && (
           <p className="text-green-600 font-medium mb-4">{success}</p>
         )}
 
-        {/* Save Button */}
         <div className="text-right">
           <button
             onClick={handleSave}

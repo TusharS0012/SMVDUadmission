@@ -7,17 +7,12 @@ export const RunAllocation: React.FC = () => {
 
   const token = localStorage.getItem("adminToken");
 
-  const baseURL =
-  import.meta.env.MODE === "development"
-    ? import.meta.env.VITE_BACKEND_URL
-      : window?.configs?.apiUrl || "/";
-  
   const handleRun = async () => {
     setMessage("");
     setError("");
     try {
       const response = await fetch(
-        `${baseURL}/api/admin/allocate-round`,
+        `${import.meta.env.VITE_BACKEND_URL}/api/admin/allocate-round`,
         {
           method: "POST",
           headers: {
@@ -40,7 +35,6 @@ export const RunAllocation: React.FC = () => {
 
   return (
     <div className="min-h-screen bg-gradient-to-b from-blue-950 to-white">
-      {/* Header */}
       <header className="bg-transparent text-white px-6 py-4 shadow-none">
         <div className="max-w-6xl mx-auto flex items-center justify-between">
           <div className="flex items-center gap-4">
@@ -60,8 +54,6 @@ export const RunAllocation: React.FC = () => {
           </nav>
         </div>
       </header>
-
-      {/* Main Content Card */}
       <main className="flex justify-center items-center mt-16 px-4 pb-20">
         <div
           className="w-full max-w-md bg-white rounded-lg shadow-lg p-6

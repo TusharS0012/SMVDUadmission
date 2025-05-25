@@ -1,12 +1,8 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
-const baseURL =
-  import.meta.env.MODE === "development"
-    ? import.meta.env.VITE_BACKEND_URL
-    : window?.configs?.apiUrl || "/";
+const baseURL = import.meta.env.VITE_BACKEND_URL;
 
-// Admin Login Component
 export const AdminLogin: React.FC = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -36,7 +32,6 @@ export const AdminLogin: React.FC = () => {
 
   return (
     <>
-      {/* Header (Matches Profile Page) */}
       <header className="bg-blue-950 text-white px-6 py-4">
         <div className="max-w-6xl mx-auto flex items-center justify-between">
           <div className="flex items-center gap-4">

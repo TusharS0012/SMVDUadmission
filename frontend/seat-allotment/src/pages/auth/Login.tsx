@@ -1,11 +1,7 @@
 import { useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
 
-const baseURL =
-  import.meta.env.MODE === "development"
-    ? import.meta.env.VITE_BACKEND_URL
-    : window?.configs?.apiUrl || "/";
-
+const baseURL = import.meta.env.VITE_BACKEND_URL;
 
 const Login: React.FC = () => {
   const [email, setEmail] = useState("");
@@ -16,14 +12,11 @@ const Login: React.FC = () => {
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
 
-    const response = await fetch(
-      `${baseURL}/api/login`,
-      {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ email, applicationNumber }),
-      }
-    );
+    const response = await fetch(`${baseURL}/api/login`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ email, applicationNumber }),
+    });
 
     const data = await response.json();
 
@@ -58,7 +51,6 @@ const Login: React.FC = () => {
         </div>
       </header>
 
-      {/* Main Login Card */}
       <main className="flex justify-center items-center mt-16 px-4 pb-20">
         <div
           className="w-full max-w-md bg-white rounded-lg shadow-lg p-8
