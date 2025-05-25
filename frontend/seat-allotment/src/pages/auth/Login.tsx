@@ -1,6 +1,12 @@
 import { useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
 
+const baseURL =
+  import.meta.env.MODE === "development"
+    ? import.meta.env.VITE_BACKEND_URL
+    : window?.configs?.apiUrl || "/";
+
+
 const Login: React.FC = () => {
   const [email, setEmail] = useState("");
   const [applicationNumber, setApplicationNumber] = useState("");
@@ -11,7 +17,7 @@ const Login: React.FC = () => {
     e.preventDefault();
 
     const response = await fetch(
-      `${import.meta.env.VITE_BACKEND_URL}/api/login`,
+      `${baseURL}/api/login`,
       {
         method: "POST",
         headers: { "Content-Type": "application/json" },

@@ -1,0 +1,1 @@
+export const apiUrl = "https://a7a6fc1e-2257-4d97-8ce7-0d60bcde4762-dev.e1-eu-north-azure.choreoapis.dev/default/backend/v1.0";

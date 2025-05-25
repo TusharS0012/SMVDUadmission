@@ -1,6 +1,11 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
+const baseURL =
+  import.meta.env.MODE === "development"
+    ? import.meta.env.VITE_BACKEND_URL
+    : window?.configs?.apiUrl || "/";
+
 // Admin Login Component
 export const AdminLogin: React.FC = () => {
   const [email, setEmail] = useState("");
@@ -12,14 +17,11 @@ export const AdminLogin: React.FC = () => {
     e.preventDefault();
     setError("");
     try {
-      const response = await fetch(
-        `${import.meta.env.VITE_BACKEND_URL}/api/admin/login`,
-        {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ email, password }),
-        }
-      );
+      const response = await fetch(`${baseURL}/api/admin/login`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ email, password }),
+      });
       const data = await response.json();
       if (response.ok) {
         localStorage.setItem("adminToken", data.token);

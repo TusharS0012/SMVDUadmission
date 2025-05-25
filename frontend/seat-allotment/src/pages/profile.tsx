@@ -1,6 +1,11 @@
 import { useEffect, useState } from "react";
 import { Input, Select } from "../components/select";
 
+const baseURL =
+  import.meta.env.MODE === "development"
+    ? import.meta.env.VITE_BACKEND_URL
+    : window?.configs?.apiUrl || "/";
+
 const Profile: React.FC = () => {
   const [profile, setProfile] = useState<any>("new");
   const [error, setError] = useState("");
@@ -11,14 +16,9 @@ const Profile: React.FC = () => {
   useEffect(() => {
     const fetchProfile = async () => {
       try {
-        const res = await fetch(
-          `${
-            import.meta.env.VITE_BACKEND_URL
-          }/api/profile/${applicationNumber}`,
-          {
-            headers: { Authorization: `Bearer ${token}` },
-          }
-        );
+        const res = await fetch(`${baseURL}/api/profile/${applicationNumber}`, {
+          headers: { Authorization: `Bearer ${token}` },
+        });
         const data = await res.json();
         if (!res.ok) throw new Error(data.message);
         setProfile(data);
@@ -42,17 +42,14 @@ const Profile: React.FC = () => {
     setSuccess("");
 
     try {
-      const res = await fetch(
-        `${import.meta.env.VITE_BACKEND_URL}/api/profile/${applicationNumber}`,
-        {
-          method: "PUT",
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${token}`,
-          },
-          body: JSON.stringify(profile),
-        }
-      );
+      const res = await fetch(`${baseURL}/api/profile/${applicationNumber}`, {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+        body: JSON.stringify(profile),
+      });
 
       const data = await res.json();
       if (!res.ok) throw new Error(data.message);

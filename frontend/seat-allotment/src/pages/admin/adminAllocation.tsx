@@ -7,12 +7,17 @@ export const RunAllocation: React.FC = () => {
 
   const token = localStorage.getItem("adminToken");
 
+  const baseURL =
+  import.meta.env.MODE === "development"
+    ? import.meta.env.VITE_BACKEND_URL
+      : window?.configs?.apiUrl || "/";
+  
   const handleRun = async () => {
     setMessage("");
     setError("");
     try {
       const response = await fetch(
-        `${import.meta.env.VITE_BACKEND_URL}/api/admin/allocate-round`,
+        `${baseURL}/api/admin/allocate-round`,
         {
           method: "POST",
           headers: {

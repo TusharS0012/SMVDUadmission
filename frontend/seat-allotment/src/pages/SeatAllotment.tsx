@@ -8,6 +8,10 @@ interface SeatAllotmentData {
   round: string;
   status: "LOCK" | "FLOAT" | "PENDING";
 }
+const baseURL =
+  import.meta.env.MODE === "development"
+    ? import.meta.env.VITE_BACKEND_URL
+    : window?.configs?.apiUrl || "/";
 
 const SeatAllotment = () => {
   const [allotment, setAllotment] = useState<SeatAllotmentData | null>(null);
@@ -24,16 +28,13 @@ const SeatAllotment = () => {
       }
 
       try {
-        const res = await fetch(
-          `${import.meta.env.VITE_BACKEND_URL}/api/seat-allotment`,
-          {
-            method: "POST",
-            headers: {
-              "Content-Type": "application/json",
-              Authorization: `Bearer ${token}`,
-            },
-          }
-        );
+        const res = await fetch(`${baseURL}/api/seat-allotment`, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+          },
+        });
 
         if (!res.ok) {
           const err = await res.json();
@@ -58,20 +59,17 @@ const SeatAllotment = () => {
 
     try {
       const token = localStorage.getItem("token");
-      const res = await fetch(
-        `${import.meta.env.VITE_BACKEND_URL}/api/seat-allotment/status`,
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${token}`,
-          },
-          body: JSON.stringify({
-            applicationNumber: allotment.studentId,
-            status: newStatus,
-          }),
-        }
-      );
+      const res = await fetch(`${baseURL}/api/seat-allotment/status`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+        body: JSON.stringify({
+          applicationNumber: allotment.studentId,
+          status: newStatus,
+        }),
+      });
 
       if (!res.ok) {
         const err = await res.json();

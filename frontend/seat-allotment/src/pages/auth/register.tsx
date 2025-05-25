@@ -9,17 +9,19 @@ const Register: React.FC = () => {
   const [error, setError] = useState("");
   const navigate = useNavigate();
 
+  const baseURL =
+    import.meta.env.MODE === "development"
+      ? import.meta.env.VITE_BACKEND_URL
+      : window?.configs?.apiUrl || "/";
+
   const handleRegister = async (e: React.FormEvent) => {
     e.preventDefault();
 
-    const response = await fetch(
-      `${import.meta.env.VITE_BACKEND_URL}/api/register`,
-      {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ name, email, phoneNumber }),
-      }
-    );
+    const response = await fetch(`${baseURL}/api/register`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ name, email, phoneNumber }),
+    });
 
     const data = await response.json();
 
